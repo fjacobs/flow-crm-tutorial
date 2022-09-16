@@ -1,4 +1,4 @@
-package com.example.application.views;
+package com.example.application.argo.views;
 
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Span;
@@ -10,7 +10,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @Route("login")
-@PageTitle("Login | Vaadin CRM")
+@PageTitle("Login | Argo360 CRM")
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
 	private final LoginForm login = new LoginForm();
@@ -24,7 +24,7 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 		login.setAction("login");  
 
 		VerticalLayout header = new VerticalLayout();
-		header.add(new H1("Vaadin CRM"), new Span("Username: user"), new Span("Password: userpass"));
+		header.add(new H1("Argo360 CRM & Inventory"), new Span("Username: user"), new Span("Password: userpass"));
 		header.setAlignItems(Alignment.CENTER);
 
 		add(header, login);

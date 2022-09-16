@@ -1,6 +1,6 @@
-package com.example.application.views;
+package com.example.application.argo.views;
 
-import com.example.application.data.service.CrmService;
+import com.example.application.argo.data.service.CrmService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.ChartType;
@@ -14,7 +14,7 @@ import com.vaadin.flow.router.Route;
 import javax.annotation.security.PermitAll;
 
 @Route(value = "dashboard", layout = MainLayout.class)
-@PageTitle("Dashboard | Vaadin CRM")
+@PageTitle("Dashboard | Argo360 CRM")
 @PermitAll
 public class DashboardView extends VerticalLayout {
     private final CrmService service;
@@ -36,8 +36,8 @@ public class DashboardView extends VerticalLayout {
         Chart chart = new Chart(ChartType.PIE);
 
         DataSeries dataSeries = new DataSeries();
-        service.findAllCompanies().forEach(company ->
-            dataSeries.add(new DataSeriesItem(company.getName(), company.getEmployeeCount())));
+        service.findAllAccounts("").forEach(company ->
+            dataSeries.add(new DataSeriesItem(company.getCompanyName(), (long) company.getLots().size())));
         chart.getConfiguration().setSeries(dataSeries);
         return chart;
     }

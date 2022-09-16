@@ -1,7 +1,8 @@
-package com.example.application.views;
+package com.example.application.argo.views;
 
-import com.example.application.security.SecurityService;
-import com.example.application.views.list.ListView;
+import com.example.application.argo.security.SecurityService;
+import com.example.application.argo.views.list.AccountsView;
+import com.example.application.argo.views.list.AssetsView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -22,7 +23,7 @@ public class MainLayout extends AppLayout {
     }
 
     private void createHeader() {
-        H1 logo = new H1("Vaadin CRM");
+        H1 logo = new H1("Argo360 Makor (Backup) Inventory");
         logo.addClassNames("text-l", "m-m");
 
         Button logout = new Button("Log out", e -> securityService.logout());
@@ -33,17 +34,19 @@ public class MainLayout extends AppLayout {
         header.expand(logo);
         header.setWidth("100%");
         header.addClassNames("py-0", "px-m");
-
         addToNavbar(header);
-
     }
 
     private void createDrawer() {
-        RouterLink listLink = new RouterLink("List", ListView.class);
-        listLink.setHighlightCondition(HighlightConditions.sameLocation());
+        RouterLink accountLink = new RouterLink("Accounts", AccountsView.class);
+        accountLink.setHighlightCondition(HighlightConditions.sameLocation());
+
+        RouterLink assetLink = new RouterLink("Assets", AssetsView.class);
+        assetLink.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(
-            listLink,
+            accountLink,
+            assetLink,
             new RouterLink("Dashboard", DashboardView.class)
         ));
     }

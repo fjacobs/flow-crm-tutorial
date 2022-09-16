@@ -1,4 +1,4 @@
-package com.example.application.security;
+package com.example.application.argo.security;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinServletRequest;
