@@ -254,7 +254,8 @@
     "@polymer/polymer": "$@polymer/polymer",
     "date-fns": "$date-fns",
     "@vaadin/multi-select-combo-box": "$@vaadin/multi-select-combo-box",
-    "proj4": "$proj4"
+    "proj4": "$proj4",
+    "lumo-css-framework": "$lumo-css-framework"
   },
   "vaadin": {
     "dependencies": {

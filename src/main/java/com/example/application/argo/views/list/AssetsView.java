@@ -1,11 +1,9 @@
 package com.example.application.argo.views.list;
 
-import com.example.application.argo.data.entity.Account;
 import com.example.application.argo.data.entity.Asset;
-import com.example.application.argo.data.entity.Lot;
 import com.example.application.argo.data.service.CrmService;
 import com.example.application.argo.views.MainLayout;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.FlexLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -18,20 +16,18 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.security.PermitAll;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 
 
 @Component
 @Scope("prototype")
-@Route(value="", layout = MainLayout.class)
+@Route(value = "", layout = MainLayout.class)
 @PageTitle("Assets | Argo360 Makor (Backup) Inventory ")
 @PermitAll
 public class AssetsView extends VerticalLayout {
     Grid<Asset> grid = new Grid<>(Asset.class);
-    TextField filterText = new TextField();
+    TextField modelFilterText = new TextField();
+
+    ComboBox<String> accountFilterComboBox = new ComboBox<>();
     CrmService service;
 
     public AssetsView(CrmService service) {
@@ -47,35 +43,45 @@ public class AssetsView extends VerticalLayout {
         content.setSizeFull();
 
         add(getToolbar(), content);
-        updateList();
+        getAllAssets();
+    }
+
+    private void getAllAssets() {
+        service.findAllAssets();
     }
 
     private void configureGrid() {
         grid.addClassNames("assets-grid");
         grid.setSizeFull();
-        grid.setColumns("lot", "status", "clazz", "mfg","model","partNumber", "partNumber", "grade", "channel"
-            ,"upgradeDescription", "auditDescription", "functionalDescription", "cosmeticsDescription",
-            "onShelf", "pallet", "wareHouse", "location"
+        grid.setColumns("lot", "grade", "status", "clazz", "mfg", "model", "partNumber", "serial", "channel", "onShelf", "pallet", "wareHouse", "location"
+                , "functionalDescription", "cosmeticsDescription", "upgradeDescription", "auditDescription"
         );
-
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
     }
 
     private HorizontalLayout getToolbar() {
-        filterText.setPlaceholder("Filter by Account...");
-        filterText.setClearButtonVisible(true);
-        filterText.setValueChangeMode(ValueChangeMode.LAZY);
-        filterText.addValueChangeListener(e -> updateList());
 
-        HorizontalLayout toolbar = new HorizontalLayout(filterText);
+        accountFilterComboBox.setItems(service.getAllAccountNames());
+        accountFilterComboBox.setPlaceholder("Select Account");
+        accountFilterComboBox.addValueChangeListener(e-> accountFilterChangeListener(e.getValue()));
+
+        modelFilterText.setPlaceholder("Filter by Model...");
+        modelFilterText.setClearButtonVisible(true);
+        modelFilterText.setValueChangeMode(ValueChangeMode.LAZY);
+        modelFilterText.addValueChangeListener(e -> modelFilterEventListener());
+
+        HorizontalLayout toolbar = new HorizontalLayout(accountFilterComboBox, modelFilterText);
         toolbar.addClassName("assets-toolbar");
         return toolbar;
     }
 
 
-    private void updateList() {
-        grid.setItems(service.findAllAssets(filterText.getValue()));
+    private void modelFilterEventListener() {
+        //  grid.setItems(service.findAllAssets("Coolblue"));
     }
 
-
+    private void accountFilterChangeListener(String company) {
+        System.out.println("User selected company: " + company);
+        grid.setItems(service.findAssetsByAccount(accountFilterComboBox.getValue()));
+    }
 }

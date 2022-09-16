@@ -31,16 +31,17 @@ public class Account {
     private String website;
     @Column()
     private String owner;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Contact> contacts;
 
     @JsonManagedReference
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Location> locations;
 
     @OneToMany(
             mappedBy = "account",
-            cascade = CascadeType.ALL
+            cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER
     )
     private Set<Lot> lots;
 

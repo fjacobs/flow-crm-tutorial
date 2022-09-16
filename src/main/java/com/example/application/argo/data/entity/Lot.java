@@ -26,10 +26,11 @@ public class Lot {
     private String customerLotRef1;
 
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Account account;
 
     @OneToMany(
+            fetch = FetchType.EAGER,
             mappedBy = "lot",
             cascade = CascadeType.ALL
     )
@@ -50,8 +51,6 @@ public class Lot {
 
     @Override
     public String toString() {
-        return "Lot{" +
-                "id=" + id +
-                '}';
+        return "" + id;
     }
 }

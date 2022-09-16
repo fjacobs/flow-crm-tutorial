@@ -35,10 +35,10 @@ public class DashboardView extends VerticalLayout {
     private Chart getCompaniesChart() {
         Chart chart = new Chart(ChartType.PIE);
 
-        DataSeries dataSeries = new DataSeries();
-        service.findAllAccounts("").forEach(company ->
-            dataSeries.add(new DataSeriesItem(company.getCompanyName(), (long) company.getLots().size())));
-        chart.getConfiguration().setSeries(dataSeries);
+//        DataSeries dataSeries = new DataSeries();
+//        service.findAllAssets("Coolblue").forEach(company ->
+//            dataSeries.add(new DataSeriesItem(company.(), (long) company.getLots().size())));
+//        chart.getConfiguration().setSeries(dataSeries);
         return chart;
     }
 }

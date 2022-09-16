@@ -1,7 +1,6 @@
 package com.example.application.argo.views;
 
 import com.example.application.argo.security.SecurityService;
-import com.example.application.argo.views.list.AccountsView;
 import com.example.application.argo.views.list.AssetsView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -38,14 +37,11 @@ public class MainLayout extends AppLayout {
     }
 
     private void createDrawer() {
-        RouterLink accountLink = new RouterLink("Accounts", AccountsView.class);
-        accountLink.setHighlightCondition(HighlightConditions.sameLocation());
 
         RouterLink assetLink = new RouterLink("Assets", AssetsView.class);
         assetLink.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(
-            accountLink,
             assetLink,
             new RouterLink("Dashboard", DashboardView.class)
         ));

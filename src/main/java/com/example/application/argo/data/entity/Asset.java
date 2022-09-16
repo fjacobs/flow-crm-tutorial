@@ -20,7 +20,7 @@ public class Asset {
     @Column(name = "asset_id", nullable = false)
     private Integer id;
     @JsonBackReference
-    @ManyToOne(fetch=FetchType.LAZY)
+    @ManyToOne(fetch=FetchType.EAGER)
     private Lot lot;
     private String status;
     private String clazz;
